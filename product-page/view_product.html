@@ -53,6 +53,7 @@
       border-radius: 8px;
       background: #fff;
       font-family: Arial, sans-serif;
+      margin: 10px;
     }
 
     /* Image */
@@ -154,6 +155,40 @@
     .product-listing {
       margin-top: 80px;
     }
+
+     .modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    padding-top: 50px;
+  }
+
+  .modal-content {
+    background: white;
+    margin: auto;
+    padding: 25px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
+    font-family: Arial;
+  }
+
+  .close-modal {
+    float: right;
+    font-size: 28px;
+    cursor: pointer;
+  }
+
+  .modal-section h4 {
+    margin: 12px 0 4px;
+  }
 
     /* Responsive */
     @media (max-width: 900px) {
@@ -335,11 +370,10 @@
           <button class="add-cart">Add to cart</button>
         </div>
       </div>
-
-      
-
     </section>
   </main>
+
+  
 
    <footer class="site-footer">
     <div class="container footer-content">
@@ -375,19 +409,100 @@
     </div>
   </footer>
 
-  <script>
-    const toggleBtn = document.querySelector('.spec-toggle');
-    const specs = document.querySelector('.spec-grid');
+<!-- ADD TO CART MODAL INTEGRATED -->
+ <div id="cartModal" class="modal">
+  <div class="modal-content">
+    <span class="close-modal">&times;</span>
+    <h2>Add to Cart</h2>
+    <p>Please select product configuration:</p>
 
-    toggleBtn.addEventListener('click', () => {
-      if (specs.style.display === 'flex') {
-        specs.style.display = 'none';
-        toggleBtn.textContent = 'Show specifications ▼';
-      } else {
-        specs.style.display = 'flex';
-        toggleBtn.textContent = 'Show specifications ▲';
-      }
+    <form id="cartForm">
+
+      <div class="modal-section">
+        <h4>Model</h4>
+        <label><input type="radio" name="model" value="Single Diaphragm"> Single Diaphragm Differential Pressure Gauge</label>
+      </div>
+
+      <div class="modal-section">
+        <h4>Dial Size</h4>
+        <label><input type="radio" name="dial" value="100 mm"> 100 mm (4”)</label><br>
+        <label><input type="radio" name="dial" value="150 mm"> 150 mm (6”)</label>
+      </div>
+
+      <div class="modal-section">
+        <h4>Version</h4>
+        <label><input type="radio" name="version" value="Dry"> Dry (fillable)</label><br>
+        <label><input type="radio" name="version" value="Glycerin"> Glycerin filled</label><br>
+        <label><input type="radio" name="version" value="Silicone"> Silicon oil filled</label>
+      </div>
+
+      <div class="modal-section">
+        <h4>Mounting / Orientation</h4>
+        <label><input type="radio" name="mounting" value="Direct Bottom"> Direct bottom connection</label><br>
+        <label><input type="radio" name="mounting" value="Center Back"> Direct, center back connection</label>
+      </div>
+
+      <div class="modal-section">
+        <h4>Process Connection</h4>
+        <label><input type="radio" name="process-conn" value="14NM.14BM"> ¼” NPT (M) × ½’’ BSP (M)</label><br>
+        <label><input type="radio" name="process-conn" value="14NM.14NM"> ¼” NPT (M) × ½’’ NPT (M)</label><br>
+        <label><input type="radio" name="process-conn" value="14NF"> ¼” NPT (F)</label>
+      </div>
+
+      <div class="modal-section">
+        <h4>Chamber Material</h4>
+        <label><input type="radio" name="chamber" value="SS304"> SS 304</label><br>
+        <label><input type="radio" name="chamber" value="SS316"> SS 316</label><br>
+        <label><input type="radio" name="chamber" value="SS316L"> SS 316L</label><br>
+        <label><input type="radio" name="chamber" value="Monel"> Monel 400</label><br>
+        <label><input type="radio" name="chamber" value="HastC"> Hast C-276</label>
+      </div>
+
+      <div class="modal-section">
+        <h4>Diaphragm Material</h4>
+        <label><input type="radio" name="diaphragm" value="SS316"> SS 316</label><br>
+        <label><input type="radio" name="diaphragm" value="SS316L"> SS 316L</label><br>
+        <label><input type="radio" name="diaphragm" value="Monel"> Monel 400</label><br>
+        <label><input type="radio" name="diaphragm" value="HastC"> Hast C-276</label>
+      </div>
+
+      <div class="modal-section">
+        <h4>Range</h4>
+        <label><input type="radio" name="range" value="Table"> Select from Table 1</label>
+      </div>
+
+      <button type="submit" class="modal-submit">Add to Cart</button>
+    </form>
+  </div>
+</div>
+
+
+
+  <script>
+  const modal = document.getElementById("cartModal");
+  const closeModal = document.querySelector(".close-modal");
+  const addButtons = document.querySelectorAll(".add-cart");
+
+  addButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      modal.style.display = "block";
     });
-  </script>
+  });
+
+  closeModal.addEventListener("click", () => {
+    modal.style.display = "none";
+  });
+
+  window.addEventListener("click", (e) => {
+    if (e.target === modal) modal.style.display = "none";
+  });
+
+  document.getElementById("cartForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    alert("Item added to cart!");
+    modal.style.display = "none";
+  });
+</script>
+
 </body>
 </html>
